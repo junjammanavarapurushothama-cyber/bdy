@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Premium Birthday Experience 🎉</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial;
+  background: rgba(47, 48, 65, 0.419);
+  color: white;
+}
+
+/* ===== CINEMATIC INTRO ===== */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(17, 17, 17);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+  animation: fadeOut cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards 7s;
+}
+
+#intro h1 {
+  font-size: 3em;
+  animation: glow 3.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px white; }
+  to { text-shadow: 0 0 30px #d5c80a3c; }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* ===== BACKGROUND CANVAS ===== */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* ===== MAIN CONTENT ===== */
+#content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* Cake */
+.cake {
+  position: relative;
+  width: 220px;
+  height: 120px;
+  margin: 80px auto;
+}
+
+/* Candle body */
+.candle {
+  width: 12px;
+  height: 55px;
+  background: linear-gradient(to bottom, #ffffff, #e6e6e6, #cfcfcf);
+  position: absolute;
+  top: -55px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3),
+              inset -2px 0 4px rgba(0,0,0,0.1);
+}
+
+.candle::before {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 100%;
+  left: 10%;
+  background: rgba(255,255,255,0.5);
+  border-radius: 6px;
+}
+
+/* ===== FLAME ===== */
+.flame {
+  width: 14px;
+  height: 18px;
+  position: absolute;
+  top: -18px;
+  left: -1px;
+  background: radial-gradient(circle at 50% 60%, #9f01c6, #ffb300, #ff4d6d);
+  border-radius: 50%;
+  transform-origin: center bottom;
+  animation: flameFlicker 0.2s infinite alternate;
+  box-shadow: 0 0 12px #ff9800, 0 0 25px rgba(255,77,109,0.8);
+}
+
+@keyframes flameFlicker {
+  0% { transform: scale(1) rotate(-3deg); opacity: 1; }
+  100% { transform: scale(1.25) rotate(3deg); opacity: 0.75; }
+}
+
+/* smoke effect */
+.smoke {
+  position: absolute;
+  top: -10px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  background: rgba(200,200,200,0.7);
+  border-radius: 50%;
+  animation: smokeRise 1s forwards;
+}
+
+@keyframes smokeRise {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  100% { transform: translateY(-50px) scale(2.5); opacity: 0; }
+}
+
+/* Message */
+#message {
+  font-size: 1.2em;
+  margin: 20px;
+  min-height: 60px;
+}
+
+/* Buttons */
+button {
+  margin: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1>🎉 Ninu E Link Yak Open Mad de anta Oooo madok enu kelsa ella ansutte alva erli carry On!!! 🎉</h1>
+  <p>Loading Surprise Experience...</p>
+</div>
+
+<!-- BACKGROUND -->
+<canvas id="bg"></canvas>
+
+<div id="content">
+
+  <h2>💖 Advanced Happy Birthday VaaaaNaaaaJaaaaKshiiiiiiiiiii(Special One) 💖</h2>
+  <h3> ennu ninna birthday tumbaaa doooraaaa ede adru eno ond madbeku anta mad de  esta agutte anta ankondidini</h3>
+
+
+  <button onclick="blowCandles()">🕯️ Blow Candles</button>
+  <button onclick="revealGift()">🎁 Open Gift</button>
+
+  <div id="message"></div>
+
+</div>
+
+<script>
+
+/* BACKGROUND */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<120;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*2,
+    dx: (Math.random()-0.5),
+    dy: (Math.random()-0.5)
+  });
+}
+
+function animate(){
+  ctx.fillStyle = "rgba(0,0,0,0.2)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p=>{
+    p.x += p.dx;
+    p.y += p.dy;
+
+    if(p.x<0||p.x>canvas.width) p.dx *= -1;
+    if(p.y<0||p.y>canvas.height) p.dy *= -1;
+
+    ctx.fillStyle = "#ff4d6d";
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* CANDLES */
+function blowCandles(){
+  document.querySelectorAll(".flame").forEach(flame=>{
+    const smoke = document.createElement("div");
+    smoke.className = "smoke";
+    flame.parentElement.appendChild(smoke);
+
+    flame.style.display = "none";
+    setTimeout(()=>smoke.remove(),1000);
+  });
+
+  typeMessage("💖 All wishes are now released into the universe...Many More Happy Returns Of The Day My Dear Special One  🎂");
+}
+
+/* TYPEWRITER */
+function typeMessage(text){
+  let i = 0;
+  const msg = document.getElementById("message");
+  msg.innerHTML = "";
+
+  let interval = setInterval(()=>{
+    msg.innerHTML += text[i];
+    i++;
+    if(i>=text.length) clearInterval(interval);
+  },40);
+}
+
+/* GIFT MESSAGE (FULL PRESERVED TEXT) */
+function revealGift(){
+  const giftText = "🎁 ​👑❤️‍🩹 ದೇವರು ಆಶೀರ್ವದಿಸಿದ ಶುಭ ದಿನ, ನನ್ನ ಪ್ರೀತಿಯ ಪುಟ್ಟ ದೇವತೆಯ ಹುಟ್ಟುಹಬ್ಬದ ದಿನ! 🎂🥳 ​ನಗು ನಗುತಾ ನಲಿ ಅನುದಿನ,\n​ಸುಸಂಸ್ಕಾರದ ಹಾದಿಯಲ್ಲಿ ಸಾಗಲಿ ನಿನ್ನ ಜೀವನ,\n​ಪ್ರತಿದಿನವೂ ನಿನಗಾಗಲಿ ಅತ್ಯುತ್ತಮ ದಿನ!\n​ಸ್ನೇಹಕ್ಕೆ ನೀನೇ ಸಾಟಿ, ಪ್ರೀತಿಯಲ್ಲಿ ನೀನೇ ಮಿಗಿಲು. ನಿನ್ನ ಆ ಮುಗ್ಧ ಮನಸ್ಸಿನ ಮುಂದೆ ಬೇರೆಲ್ಲವೂ ಶೂನ್ಯ. ನಿನ್ನನ್ನು ವರ್ಣಿಸಲು ಪದಗಳ ಹುಡುಕಾಟದಲ್ಲಿದ್ದೇನೆ, ಆದರೆ ನಿನ್ನ ಗುಣಕ್ಕೆ ಯಾವ ಪದವೂ ಸಮನಾಗುತ್ತಿಲ್ಲ.\n​ನನ್ನ ಪ್ರೀತಿಯ ತಂಗ್ಯಮ್ಮ, ನೂರಾರು ಕಾಲ ಯಾವುದೇ ಕಷ್ಟವಿಲ್ಲದೆ, ಸದಾ ಸಂತೋಷದ ಕಡಲಿನಲ್ಲಿ ತೇಲಾಡುತಾ ಇರು.ನಿನ್ನ ನಗು ನಮ್ಮ ಮನೆಯ ಬೆಳಕು, ನಿನ್ನ ಪ್ರೀತಿ ನಮ್ಮ ಬದುಕಿನ ಬಲ.\n​ಬಾಳಿನ ಪ್ರತಿ ಹೆಜ್ಜೆಯಲ್ಲೂ ಯಶಸ್ಸು ನಿನ್ನದಾಗಲಿ, ಪ್ರತಿದಿನವೂ ನಿನಗೆ ಶುಭ ದಿನವಾಗಲಿ. ಸಂಸ್ಕಾರ ಮತ್ತು ಸಂಸ್ಕೃತಿಯೇ ನಿನ್ನ ಆಭರಣವಾಗಲಿ. ನಿನ್ನಲ್ಲಿರುವ ಆ ಸ್ನೇಹಮಯ ಕರುಣೆ, ನಿಷ್ಕಲ್ಮಶ ಪ್ರೀತಿ ಯಾರಿಗೂ ಸಿಗಲಾರದ ಅಪರೂಪದ ಗುಣಗಳು. ನಿನ್ನ ವ್ಯಕ್ತಿತ್ವವನ್ನು ವರ್ಣಿಸಲು ಪದಗಳೇ ಮೌನವಾಗಿವೆ. ನಿನ್ನ ಮುಗ್ಧತೆಯೇ ನಿನ್ನ ಅತಿ ದೊಡ್ಡ ಶಕ್ತಿ, ಅಲ್ಲಿ ದ್ವೇಷಕ್ಕೆ ಕಾಸಿನಷ್ಟೂ ಜಾಗವಿಲ್ಲ.\n​ಆಯುಷ್ಯ, ಆರೋಗ್ಯ, ಐಶ್ವರ್ಯ ಎಲ್ಲವನ್ನೂ ಆ ಭಗವಂತ ನಿನಗೆ ಕರುಣಿಸಲಿ. ನೂರಾರು ಕಾಲ ಸದಾ ಸುಖವಾಗಿ, ಹಸನ್ಮುಖಿಯಾಗಿ ಬಾಳು ತಂಗ್ಯಮ್ಮ.ಜನ್ಮದಿನದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು 🌍♥️🎉. ❤️. Evag Swalpa Englishuuuuuu bek anta anista ede alva......................................................edu nan ankota erodu okkkkkna .Happy birthday to my amazing sister! We might argue over the smallest things, but there is absolutely no one else I'd rather have by my side through this crazy journey of life. Thank you for being my constant support, my secret keeper, and the person who always knows how to lift my spirits.\nYou bring so much joy and laughter into our home and I am incredibly proud of the person you are. On your special day, I wish you endless happiness, love, and success. Cheers to another year of great memories. Have the absolute best birthday, sis!";
+
+  // Remove any previously added gift image
+  const existingImg = document.getElementById("gift-image");
+  if(existingImg) existingImg.remove();
+
+  // Show image after typewriter completes
+  const typingDuration = giftText.length * 40;
+  setTimeout(() => {
+    const img = document.createElement("img");
+    img.id = "gift-image";
+    img.src = "";   // ← Replace with your actual image URL
+    img.alt = "Birthday Gift 🎁";
+    img.style.cssText = "display:block; margin:20px auto; max-width:90%; max-height:320px; border-radius:16px; box-shadow:0 0 30px rgba(255,77,109,0.7);";
+    document.getElementById("message").after(img);
+  }, typingDuration);
+
+  typeMessage(giftText);
+}
+
+/* REMOVE INTRO */
+setTimeout(()=>{
+  document.getElementById("intro").style.display="none";
+},5000);
+
+</script>
+
+</body>
+</html>
